@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CLINICAL.Application.Interface\CLINICAL.Application.Interface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="QuerysSQL\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using CLINICAL.Application.Dtos.Response;
+using CLINICAL.Application.UseCase.UseCases.Analisis.Commands.CreateCommand;
 using CLINICAL.Application.UseCase.UseCases.Analisis.Queries.GetAllQuery;
 using CLINICAL.Application.UseCase.UseCases.Analisis.Queries.GetByIdQuery;
 using CLINICAL.Domain.Entities;
@@ -23,10 +24,18 @@ namespace CLINICAL.Api.Controllers
             var response = await _mediator.Send(new GetlAllAnalisisQuery());
             return Ok(response);
         }
+
         [HttpGet("{analisisId:int}")]
         public async Task<IActionResult> ListAnalisisPorId(int analisisId)
         {
             var response = await _mediator.Send(new GetAnalisisByIdQuery() { Id = analisisId });
+            return Ok(response);
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> CreateAnalisis(CreateAnalisisCommand command)
+        {
+            var response = await _mediator.Send(command);
             return Ok(response);
         }
     }
