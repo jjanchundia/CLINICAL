@@ -8,7 +8,8 @@ namespace CLINICAL.Application.UseCase.Extensions
     {
         public static IServiceCollection AddInjectionApplication(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            //Forma de registrar Assembly de nueva actualización de MediatR
+            services.AddMediatR(x=> x.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;

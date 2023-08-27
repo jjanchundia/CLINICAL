@@ -30,3 +30,11 @@ public IDbConnection CreateConnection => new SqlConnection(_connectionString);
 *Se crea interfaz para tabla Analisis en Interface, y se crea Repository analisis en Persistence, dentro de Repositories.
 *Se crea logica para consultar listado de Analisis-Tabla con Store procedure.
 *Se crea BD, tabla y store procedure para consultar Analisis.
+
+*Se crea proceso para consultar por AnalisisId
+*Se cambia paquetes nugest de MediatR.
+*En proyecto CLINICAL.Application.UseCase se desintala paquete nuget MediatR.Extensions.Microsoft.DependencyInjection.
+*Luego actualizamos MediatR a la versión mas actualizada.
+*En proyecto CLINICAL.Application.UseCase.Extensions se actualiza método
+//Forma de registrar Assembly de nueva actualización de MediatR
+services.AddMediatR(x=> x.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));

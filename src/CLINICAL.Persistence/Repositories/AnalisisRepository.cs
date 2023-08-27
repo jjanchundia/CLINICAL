@@ -24,11 +24,28 @@ namespace CLINICAL.Persistence.Repositories
         {
             //Cadena de conexión
             using var connection = _dbcontext.CreateConnection;
-            
+
             //Store Procedure
             var query = "uspAnalisisList";
 
             var analisis = await connection.QueryAsync<Analisis>(query, CommandType.StoredProcedure);
+
+            return analisis;
+        }
+        
+        public async Task<Analisis> AnalisisById(int id)
+        {
+            //Cadena de conexión
+            using var connection = _dbcontext.CreateConnection;
+
+            //Store Procedure
+            var query = "uspAnalisisById";
+
+            //Parametros de entrada
+            var parameters = new DynamicParameters();
+            parameters.Add("AnalisisId", id);
+
+            var analisis = await connection.QuerySingleOrDefaultAsync<Analisis>(query, param: parameters, commandType: CommandType.StoredProcedure);
 
             return analisis;
         }
