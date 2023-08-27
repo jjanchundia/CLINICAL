@@ -1,36 +1,41 @@
 ﻿using AutoMapper;
+using CLINICAL.Application.Dtos.Response;
 using CLINICAL.Application.Interface;
 using CLINICAL.Application.UseCase.Commonds.Bases;
+using CLINICAL.Application.UseCase.UseCases.Analisis.Commands.UpdateCommand;
 using MediatR;
-using Entity = CLINICAL.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CLINICAL.Application.UseCase.UseCases.Analisis.Commands.UpdateCommand
+namespace CLINICAL.Application.UseCase.UseCases.Analisis.Commands.DeleteCommand
 {
-    public class UpdateAnalisisHandler : IRequestHandler<UpdateAnalisisCommand, BaseResponse<bool>>
+    public class DeleteAnalisisHandler: IRequestHandler<DeleteAnalisisCommand, BaseResponse<bool>>
     {
         private readonly IAnalisisRepository _analisisRepository;
         private readonly IMapper _mapper;
-        public UpdateAnalisisHandler(IAnalisisRepository analisisRepository, IMapper mapper)
+        public DeleteAnalisisHandler(IAnalisisRepository analisisRepository, IMapper mapper)
         {
             _analisisRepository = analisisRepository;
             _mapper = mapper;
         }
 
-        public async Task<BaseResponse<bool>> Handle(UpdateAnalisisCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<bool>> Handle(DeleteAnalisisCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseResponse<bool>();
 
             try
             {
                 //Mapeamos entidad.
-                var analisis = _mapper.Map<Entity.Analisis>(request);
 
-                response.Data = await _analisisRepository.AnalisisUpdate(analisis);
+                response.Data = await _analisisRepository.AnalisisRemove(request.AnalisisId);
 
                 if (response.Data)
                 {
                     response.IsSuccess = true;
-                    response.Message = "Se actualizó correctamente!!!";
+                    response.Message = "Eliminación Exitosa!!!";
 
                     return response;
                 }

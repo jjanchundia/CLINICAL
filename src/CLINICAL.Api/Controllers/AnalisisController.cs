@@ -1,5 +1,6 @@
 ﻿using CLINICAL.Application.Dtos.Response;
 using CLINICAL.Application.UseCase.UseCases.Analisis.Commands.CreateCommand;
+using CLINICAL.Application.UseCase.UseCases.Analisis.Commands.DeleteCommand;
 using CLINICAL.Application.UseCase.UseCases.Analisis.Commands.UpdateCommand;
 using CLINICAL.Application.UseCase.UseCases.Analisis.Queries.GetAllQuery;
 using CLINICAL.Application.UseCase.UseCases.Analisis.Queries.GetByIdQuery;
@@ -44,6 +45,13 @@ namespace CLINICAL.Api.Controllers
         public async Task<IActionResult> UpdateAnalisis([FromBody] UpdateAnalisisCommand command)
         {
             var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpDelete("delete/{analisisId:int}")]
+        public async Task<IActionResult> DeleteAnalisis(int analisisId)
+        {
+            var response = await _mediator.Send(new DeleteAnalisisCommand() { AnalisisId = analisisId });
             return Ok(response);
         }
     }
