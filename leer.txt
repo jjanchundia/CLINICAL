@@ -7,3 +7,26 @@
 *Se agrega paquetes nugets: automapper y automapper de inyeccion de dependencia, MediatR, FluentValidation.DependencyInjectionExtensions,
 en proyecto CLINICAL.Application.UseCase.
 *Se agrega nugets Dapper en CLINICAL.Persistence.
+*Se crea base de datos CLINICAL y Tabla Analisis.
+*Se configura appsettings para cadena de conexión.
+*Se crea carpeta context en proyecto CLINICAL.Persistence.
+*Se crea clase ApplicationDbContext para nuestro context:
+private readonly IConfiguration _configuration;
+private readonly string _connectionString;
+
+//Inyectamos servicios.
+public ApplicationDbContext(IConfiguration configuration)
+{
+    _configuration = configuration;
+    _connectionString = _configuration.GetConnectionString("ClinicalConnection")!; //! x asignación nula
+}
+
+//Nos ayudará a conectarnos a la BD
+public IDbConnection CreateConnection => new SqlConnection(_connectionString);
+*Creamos clase en CLINICAL.Persistence InjectionExtensions y configuramos context para que se configure como ciclo de vida Singleton.
+*Creamos carpeta Entities en CLINICAL.Domain y ahi dentro creamos entidad de Analisis con los campos de la BD
+*Se crea carpeta Commonds en UseCase, se crea crea en Commonds carpeta Bases.
+*Se crea clase BaseResponse<T> generica, para manejo de Midlewares.
+*Se crea interfaz para tabla Analisis en Interface, y se crea Repository analisis en Persistence, dentro de Repositories.
+*Se crea logica para consultar listado de Analisis-Tabla con Store procedure.
+*Se crea BD, tabla y store procedure para consultar Analisis.
