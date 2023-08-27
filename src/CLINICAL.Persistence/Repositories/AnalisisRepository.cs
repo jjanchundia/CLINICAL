@@ -68,5 +68,25 @@ namespace CLINICAL.Persistence.Repositories
 
             return recordAffected > 0;
         }
+
+        public async Task<bool> AnalisisUpdate(Analisis analisis)
+        {
+            //Cadena de conexión
+            using var connection = _dbcontext.CreateConnection;
+
+            //Store Procedure
+            var query = "UpdAnalisis";
+
+            //Parametros de entrada
+            var parameters = new DynamicParameters();
+            parameters.Add("AnalisisId", analisis.AnalisisId);
+            parameters.Add("Name", analisis.Name);
+            //parameters.Add("State", 1);
+            //parameters.Add("AuditCreateDate", DateTime.Now);
+
+            var recordAffected = await connection.ExecuteAsync(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+            return recordAffected > 0;
+        }
     }
 }

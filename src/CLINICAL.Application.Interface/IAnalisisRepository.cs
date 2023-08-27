@@ -7,5 +7,6 @@ namespace CLINICAL.Application.Interface
         Task<IEnumerable<Analisis>> ListAnalisis();
         Task<Analisis> AnalisisById(int id);
         Task<bool> AnalisisRegister(Analisis analisis);
+        Task<bool> AnalisisUpdate(Analisis analisis);
     }
 }

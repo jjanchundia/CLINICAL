@@ -39,6 +39,44 @@ public IDbConnection CreateConnection => new SqlConnection(_connectionString);
 //Forma de registrar Assembly de nueva actualización de MediatR
 services.AddMediatR(x=> x.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
++Para consultar/crear/actualizar/eliminar:
+Pasos:
+1.- Se modifica/agrega interfaz en CLINICAL.Application.Interface 
+	Task<IEnumerable<Analisis>> ListAnalisis();
+	Task<Analisis> AnalisisById(int id);
+	Task<bool> AnalisisRegister(Analisis analisis);
+	Task<bool> AnalisisUpdate(Analisis analisis);
+2.- Se agrega metodo en Repositorio en CLINICAL.Persistence.Repositories
+	Task<IEnumerable<Analisis>> ListAnalisis();
+	Task<Analisis> AnalisisById(int id);
+	Task<bool> AnalisisRegister(Analisis analisis);
+	Task<bool> AnalisisUpdate(Analisis analisis);
+3.- Luego los casos de usos en CLINICAL.Application.UseCase.UseCases.Analisis.Commands.UpdateCommand, 
+vamos a agregar la clase para actualizar: UpdateAnalisisCommand, lo mismo es para los demas(consutla, agregar, elminar).
+4.- Luego se agrega el Handler en CLINICAL.Application.UseCase.UseCases.Analisis.Commands.UpdateCommand,
+vamos a agregar la clase para actualizar: UpdateAnalisisHandler, lo mismo es para los demas(consutla, agregar, elminar).
+5.- Luego se mapea entidad en CLINICAL.Application.UseCase.Mappings
+vamos a agregar para actualizar: 
+CreateMap<UpdateAnalisisCommand, Analisis>();
+lo mismo es para los demas(consutla, agregar, elminar).
+6.- Se agrega clase para validar con FluentValidation, en este caso para agregar o actualizar, se agregó UpdateAnalisisValidator,
+en CLINICAL.Application.UseCase.UseCases.Analisis.Commands.UpdateCommand:
+public class UpdateAnalisisValidator : AbstractValidator<UpdateAnalisisCommand>
+{
+    public UpdateAnalisisValidator()
+    {
+        RuleFor(x => x.Name)
+            .NotNull().WithMessage("El campo Nombre no puede ser nulo")
+            .NotEmpty().WithMessage("El campo nombre no puede ser vacío");
+    }
+}
+7.- Por último agregamos el metodo en el controller:
+[HttpPost("update")]
+public async Task<IActionResult> UpdateAnalisis(UpdateAnalisisCommand command)
+{
+    var response = await _mediator.Send(command);
+    return Ok(response);
+}
 
 *Para usar FluenteValidation se inyecta el servicio en InjectionEsxtensions de CLINICAL:Application.UseCases
 //Se inyecta servicio de FluentValidation
