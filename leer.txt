@@ -1,0 +1,9 @@
+
+*Se agrega comunicación entre capas, referencias a los proyectos.
+	-En CLINICAL.Application.UseCase se referencia a proyectos(CLINICAL.Application.Dtos, CLINICAL.Application.Interface, CLINICAL.Domain)
+	-En CLINICAL.Infrastucture se referencia a proyecto(CLINICAL.Application).
+	-En CLINICAL.Persistence se referencia a proyecto(CLINICAL.Application.Interface).
+	-En CLINICAL.Api se referencia a proyecto(CLINICAL.Application.UseCase).
+*Se agrega paquetes nugets: automapper y automapper de inyeccion de dependencia, MediatR, FluentValidation.DependencyInjectionExtensions,
+en proyecto CLINICAL.Application.UseCase.
+*Se agrega nugets Dapper en CLINICAL.Persistence.
