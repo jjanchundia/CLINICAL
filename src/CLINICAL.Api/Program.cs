@@ -1,5 +1,6 @@
 using CLINICAL.Persistence.Extensions;
 using CLINICAL.Application.UseCase.Extensions;
+using CLINICAL.Api.Extensions.Middleware; //Para importar clase Middleware
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+//Se inyecta clase para usar Middleware creado
+app.AddMiddleware();
 
 app.MapControllers();
 

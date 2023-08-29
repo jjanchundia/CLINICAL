@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using CLINICAL.Application.UseCase.Commonds.Behaviours;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -14,6 +16,9 @@ namespace CLINICAL.Application.UseCase.Extensions
 
             //Se inyecta servicio de FluentValidation
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //Se inyecta servicio de validacion para usar el Middleware
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             return services;
         }

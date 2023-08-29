@@ -81,3 +81,6 @@ public async Task<IActionResult> UpdateAnalisis(UpdateAnalisisCommand command)
 *Para usar FluenteValidation se inyecta el servicio en InjectionEsxtensions de CLINICAL:Application.UseCases
 //Se inyecta servicio de FluentValidation
 services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+*Para Middleware:
+*Se crea clase en CLINICAL.Application.UseCase - Base - Exeptions, llamada ValidationExeptions.
