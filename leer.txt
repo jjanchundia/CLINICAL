@@ -101,3 +101,7 @@ services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 OJO:
 Se elimina clase e interfaz AnalisisRepository, IAnalisisRepository, para esto se implementó UnitOfWork y el patron Repository.
+
+*Para usar correctamente los patrones creados:
+*Se crea en CLINICAL.Application.UseCase en Command, para cambiar el state, las clases command y handler correspondientes.
+*Se crea metodos con sus propiedades anteriormente, esta vez con la inyeccion al patron UnitOfWork, se crea procedure también.
