@@ -84,3 +84,20 @@ services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 *Para Middleware:
 *Se crea clase en CLINICAL.Application.UseCase - Base - Exeptions, llamada ValidationExeptions.
+
+
+*Para implementar el patron Repository se crea carpeta Interface en CLINICAL.Application.Interface.
+*Movemos IAnalisisRepository a carpeta.
+*Se crea interfaz IGenericRepository(Generica).
+*Se crea metodos en clase anterior para usarlos para todos.
+*Se crea clase GenericRepository en CLINICAL.Persistence.Repositories donde implementamos de Interfaz IGenericRepository.
+*Creamos interface IUnitOfWork en CLINICAL.Application.Interface.Interface.
+*Creamos clase UnitOfWork en CLINICAL.Persistence.Repositories e implementamos interfaz anterior.
+*Inyectamos servicio en CLINICAL.Persistence.Extensions:
+//Inyectamos servicio de UnitOfWork
+services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+
+OJO:
+Se elimina clase e interfaz AnalisisRepository, IAnalisisRepository, para esto se implementó UnitOfWork y el patron Repository.

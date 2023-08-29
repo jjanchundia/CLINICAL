@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CLINICAL.Application.Dtos.Response;
-using CLINICAL.Application.Interface;
+using CLINICAL.Application.Interface.Interface;
 using CLINICAL.Application.UseCase.Commonds.Bases;
 using CLINICAL.Application.UseCase.UseCases.Analisis.Commands.UpdateCommand;
 using MediatR;
@@ -14,11 +14,13 @@ namespace CLINICAL.Application.UseCase.UseCases.Analisis.Commands.DeleteCommand
 {
     public class DeleteAnalisisHandler: IRequestHandler<DeleteAnalisisCommand, BaseResponse<bool>>
     {
-        private readonly IAnalisisRepository _analisisRepository;
+        //private readonly IAnalisisRepository _analisisRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public DeleteAnalisisHandler(IAnalisisRepository analisisRepository, IMapper mapper)
+        //public DeleteAnalisisHandler(IAnalisisRepository analisisRepository, IMapper mapper)
+        public DeleteAnalisisHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _analisisRepository = analisisRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -30,7 +32,8 @@ namespace CLINICAL.Application.UseCase.UseCases.Analisis.Commands.DeleteCommand
             {
                 //Mapeamos entidad.
 
-                response.Data = await _analisisRepository.AnalisisRemove(request.AnalisisId);
+                //response.Data = await _analisisRepository.AnalisisRemove(request.AnalisisId);
+                response.Data = await _unitOfWork.Analisis.ExecuteAsync("DelAnalisis", new { request.AnalisisId });
 
                 if (response.Data)
                 {

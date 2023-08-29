@@ -1,4 +1,4 @@
-﻿using CLINICAL.Application.Interface;
+﻿using CLINICAL.Application.Interface.Interface;
 using CLINICAL.Persistence.Context;
 using CLINICAL.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +12,9 @@ namespace CLINICAL.Persistence.Extensions
         {
             //Ciclo de vida singleton
             services.AddSingleton<ApplicationDbContext>();
+            //Inyectamos servicio de UnitOfWork
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAnalisisRepository, AnalisisRepository>();
 
             return services;
